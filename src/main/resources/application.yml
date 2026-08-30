@@ -1,0 +1,29 @@
+server:
+  port: 9080
+  address: 127.0.0.1
+
+spring:
+  application:
+    name: pars-mock-backend
+
+pars:
+  mock:
+    issuer: http://127.0.0.1:9080
+    audience: token-bridge
+    access-token-lifetime: 5m
+    signing-token-lifetime: 2m
+
+logging:
+  level:
+    root: INFO
+    com.bank.pars.mock: INFO
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    try-it-out-enabled: true
+    operations-sorter: method
+    tags-sorter: alpha
