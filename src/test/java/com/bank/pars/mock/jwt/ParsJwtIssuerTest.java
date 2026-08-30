@@ -1,17 +1,18 @@
 package com.bank.pars.mock.jwt;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.bank.pars.mock.config.JwtConfiguration;
 import com.bank.pars.mock.config.ParsMockProperties;
 import com.nimbusds.jose.jwk.RSAKey;
-import java.security.KeyPair;
-import java.time.Duration;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+
+import java.security.KeyPair;
+import java.time.Duration;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ParsJwtIssuerTest {
 
@@ -30,18 +31,22 @@ class ParsJwtIssuerTest {
 
         JwtDecoder decoder = NimbusJwtDecoder.withPublicKey(rsaKey.toRSAPublicKey()).build();
 
+
         TokenResponse access = issuer.issueAccessToken(
                 new AccessTokenRequest("u1", List.of("tokens:read")));
         Jwt accessJwt = decoder.decode(access.accessToken());
         assertThat(accessJwt.getClaimAsString("token_use")).isEqualTo("access");
         assertThat(accessJwt.getClaimAsString("scope")).isEqualTo("tokens:read");
 
+        String document = "document";
+        String documentDigest = Util.getDocumentDigest(document);
+
         TokenResponse signing = issuer.issueSigningToken(
-                new SigningTokenRequest("u1", SigningOperation.SIGN_CMS, "digest", true));
+                new SigningTokenRequest("u1", SigningOperation.SIGN_CMS, document, true));
         Jwt signingJwt = decoder.decode(signing.accessToken());
         assertThat(signingJwt.getClaimAsString("token_use")).isEqualTo("signing");
         assertThat(signingJwt.getClaimAsString("operation")).isEqualTo("SIGN_CMS");
-        assertThat(signingJwt.getClaimAsString("documentDigest")).isEqualTo("digest");
+        assertThat(signingJwt.getClaimAsString("documentDigest")).isEqualTo(documentDigest);
         assertThat(signingJwt.getClaimAsBoolean("checkExpire")).isTrue();
         assertThat(signingJwt.getId()).isNotBlank();
     }

@@ -6,6 +6,6 @@ import jakarta.validation.constraints.NotNull;
 public record SigningTokenRequest(
         String subject,
         @NotNull SigningOperation operation,
-        @NotBlank String documentDigest,
+        @NotBlank String document,
         boolean checkExpire) {
 }

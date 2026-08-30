@@ -1,17 +1,18 @@
 package com.bank.pars.mock.jwt;
 
 import com.bank.pars.mock.config.ParsMockProperties;
+import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
+import org.springframework.security.oauth2.jwt.JwsHeader;
+import org.springframework.security.oauth2.jwt.JwtClaimsSet;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.stereotype.Service;
+
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
-import org.springframework.security.oauth2.jwt.JwtClaimsSet;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
-import org.springframework.security.oauth2.jwt.JwsHeader;
-import org.springframework.stereotype.Service;
 
 @Service
 public class ParsJwtIssuer {
@@ -34,9 +35,9 @@ public class ParsJwtIssuer {
         List<String> scopes = request.scopes() == null || request.scopes().isEmpty()
                 ? List.copyOf(ALLOWED_SCOPES)
                 : request.scopes().stream()
-                        .filter(ALLOWED_SCOPES::contains)
-                        .distinct()
-                        .toList();
+                .filter(ALLOWED_SCOPES::contains)
+                .distinct()
+                .toList();
 
         Duration lifetime = properties.accessTokenLifetime();
         Instant now = Instant.now();
@@ -50,11 +51,12 @@ public class ParsJwtIssuer {
     public TokenResponse issueSigningToken(SigningTokenRequest request) {
         Duration lifetime = properties.signingTokenLifetime();
         Instant now = Instant.now();
+        String documentDigest = Util.getDocumentDigest(request.document());
         JwtClaimsSet claims = baseClaims(subject(request.subject()), now, lifetime)
                 .id(UUID.randomUUID().toString())
                 .claim("token_use", "signing")
                 .claim("operation", request.operation().name())
-                .claim("documentDigest", request.documentDigest())
+                .claim("documentDigest", documentDigest)
                 .claim("checkExpire", request.checkExpire())
                 .build();
         return encode(claims, lifetime);
