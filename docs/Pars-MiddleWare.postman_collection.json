@@ -1,0 +1,175 @@
+{
+	"info": {
+		"_postman_id": "33d012b2-d632-4606-a76d-f6eb0f5220b1",
+		"name": "Pars-MiddleWare",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6609914"
+	},
+	"item": [
+		{
+			"name": "mock/jwt/access",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"subject\": \"integration-user\",\r\n    \"scopes\": [\r\n        \"tokens:read\",\r\n        \"certificates:read\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:9080/api/mock/jwt/access",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9080",
+					"path": [
+						"api",
+						"mock",
+						"jwt",
+						"access"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mock/public-key",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:9080/api/mock/public-key",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9080",
+					"path": [
+						"api",
+						"mock",
+						"public-key"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mock/jwt/signing",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"subject\": \"integration-user\",\r\n    \"operation\": \"SIGN_CMS\",\r\n    \"document\": \"string\",\r\n    \"checkExpire\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:9080/api/mock/jwt/signing",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9080",
+					"path": [
+						"api",
+						"mock",
+						"jwt",
+						"signing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sign-management/sign-cms",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJraWQiOiI3MzgyZWQ2Yi0wODZhLTQ0MGEtOWRlNi04YmYwYzM1YjE2M2QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJpbnRlZ3JhdGlvbi11c2VyIiwiYXVkIjoidG9rZW4tYnJpZGdlIiwiY2hlY2tFeHBpcmUiOmZhbHNlLCJ0b2tlbl91c2UiOiJzaWduaW5nIiwiaXNzIjoiaHR0cDovLzEyNy4wLjAuMTo5MDgwIiwiZG9jdW1lbnREaWdlc3QiOiJSektILUNtTnVuRmpxSmVRaVZqM3dPcm5NLUpkTGdKNWt1b3UzSnZ0TDZnIiwiZXhwIjoxNzg4MDgxNTI0LCJpYXQiOjE3ODgwODE0MDQsIm9wZXJhdGlvbiI6IlNJR05fQ01TIiwianRpIjoiN2I2NTgxOTktNGVkNC00YWYxLTlkZTQtNjA0M2M2ZDJhN2NjIn0.EmHzrgTYtUE4in1GOIB4fRxbqzswNbfDc8g6HOqoPdiHrNTPCstZH8aWaFJUXb_psOrI7kgFC29_QHc1Bl_OE_MFtU6Zzrgg1sruwLvvQjsm5YbuuXGqwdhf7pi86P6X2QYLixAFm9c78kQJPAsvNDmeOdzSoo476fQnmSErmvbj8MuBdU95jiXVycIDXkzkdo5AN75LCjgm2N0dGBVRvlWVv2YYP4gy0mb3luVbXyMfyOpVkv7yOiXw2y0X2QdsyBU8orEljeoale53K_fDCAZpAhGIDN4qK9hwTpr4SVkHyCkikApt89ptjB_nMTqAh6tpyHHgtiPZsxAtO8f1wVeUawaNjEqPk7hET24zatFV9zlydQ4mD-URQDefKIHQhZvfyq9njxE_vokoT3y8Pp-ytDT89nh0fI4dYpV-Qc-Kw7-TH29fqNJi12QF32ZFWCEkp1l6PbFnc034KIVzUsar5whUnjFnkHldOuMFLc0cFGIv5xKrwWPQd-eCXJEH",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"isExpireChecked\": false,\r\n    \"document\": \"string\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://127.0.0.1:9443/api/v1/sign-management/sign-cms",
+					"protocol": "https",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9443",
+					"path": [
+						"api",
+						"v1",
+						"sign-management",
+						"sign-cms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mock/digest/text",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\"string\""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:9080/api/mock/digest/text",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9080",
+					"path": [
+						"api",
+						"mock",
+						"digest",
+						"text"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
